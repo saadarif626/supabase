@@ -7,4 +7,4 @@ async function checkSession() {
   }
 }
 
-checkSession();
+window.onload=checkSession();

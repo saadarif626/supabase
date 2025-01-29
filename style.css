@@ -105,3 +105,6 @@ body{
     text-decoration: underline;
     color: green;
 }
+h1{
+    letter-spacing: 5px;
+text-transform: uppercase;}

@@ -1,4 +1,3 @@
-
 let signupEmail = document.getElementById("signup-email");
 let signupPass = document.getElementById("signup-pass");
 let signupBtn = document.getElementById("signup-btn");
@@ -19,13 +18,16 @@ async function signup() {
 
     if (error) throw error;
     if (data) {
+      console.log(data);
+      console.log(data.user);
+      alert("check your email");
       try {
         const { data: userData, error: userError } = await supabase
           .from("users")
           .insert({
             userId: data.user.id,
-            email: signupEmail.value,
             name: signupName.value,
+            email: signupEmail.value,
           })
           .select();
         if (userError) throw userError;
@@ -55,6 +57,8 @@ async function signupWithGoogle() {
   try {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
+      // options:
+      //       redirectTo:"http://127.0.0.1:5500/dashboard.html";
     });
 
     if (error) throw error;
@@ -64,6 +68,7 @@ async function signupWithGoogle() {
         icon: "success",
         draggable: true,
       });
+      window.location.href("/dashboard.html");
     }
   } catch (error) {
     console.log(error);
