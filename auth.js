@@ -6,7 +6,7 @@ let loginPass = document.getElementById("login-pass");
 let loginBtn = document.getElementById("login-btn");
 let signupName = document.getElementById("signup-name");
 let signupGoogle = document.getElementById("google-btn");
-let logoutbtn = document.getElementById("logout-btn");
+
 console.log(supabase);
 
 async function signup() {
@@ -20,7 +20,7 @@ async function signup() {
     if (data) {
       console.log(data);
       console.log(data.user);
-      alert("check your email");
+      // alert("check your email");
       try {
         const { data: userData, error: userError } = await supabase
           .from("users")
@@ -36,17 +36,28 @@ async function signup() {
           Swal.fire({
             title: "Sign-Up Successfully!",
             icon: "success",
+            text:"Confirm your Email",
             draggable: true,
           });
         }
         window.location.href = "/login.html";
       } catch (error) {
         console.log(error);
+        Swal.fire({
+          title: "Error!",
+          icon: "error",
+          draggable: true,
+        });
       }
     }
     return data;
   } catch (error) {
     console.log(error);
+    Swal.fire({
+      title: "Error!",
+      icon: "error",
+      draggable: true,
+    });
   }
 }
 if (signupBtn) {
@@ -72,6 +83,11 @@ async function signupWithGoogle() {
     }
   } catch (error) {
     console.log(error);
+      Swal.fire({
+            title: "Error!",
+            icon: "error",
+            draggable: true,
+          });
   }
 }
 if (signupGoogle) {
@@ -104,17 +120,3 @@ if (loginBtn) {
   loginBtn.addEventListener("click", loginsession);
 }
 
-async function logout() {
-  try {
-    const { error } = await supabase.auth.signOut();
-    if (error) throw error;
-
-    window.location.href = "/login.html";
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-if (logoutbtn) {
-  logoutbtn.addEventListener("click", logout);
-}
