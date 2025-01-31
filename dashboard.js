@@ -102,7 +102,6 @@ async function deleteUser(userId) {
     console.log(error);
   }
 }
-
 async function logout() {
     try {
       const { error } = await supabase.auth.signOut();
@@ -118,13 +117,10 @@ async function logout() {
       });
     }
   }
-  
   if (logoutbtn) {
     logoutbtn.addEventListener("click", logout);
   } 
-
 let deleteBtn = document.getElementById("delete_info");
-
 if (deleteBtn) {
   deleteBtn.addEventListener("click", function () {
     let deleteUserId = localStorage.getItem("deleteUserId");
@@ -134,6 +130,5 @@ if (deleteBtn) {
 if(addUserBtn) {
   addUserBtn.addEventListener("click", addUser);
 }
-
 window.onload = getUsers();
 window.deleteUser = deleteUser;
