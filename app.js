@@ -1,32 +1,39 @@
 async function checkSession() {
   try {
-    const { data, error} = await supabase.auth.getSession();
-    if (data) {
-      console.log(data)
-      
-    }
+   
+    const { data } = await supabase.auth.getSession();
+    console.log(data); 
+
     const authPages = ["/index.html", "/login.html", "/"];
     const currentPath = window.location.pathname;
-    const isAuthPage = authPages.some((page) => page.includes(currentPath));
+    const isAuthPage = authPages.includes(currentPath);
 
-    const { session } = data;
 
+    const { session } = data || {}; 
+
+    
     if (session) {
+   
       if (isAuthPage) {
         window.location.href = "/dashboard.html";
       }
     } else {
+     
       if (!isAuthPage) {
         window.location.href = "/login.html";
       }
     }
-let sessioncurrent=localStorage.setItem(sessioncurrent)
-    console.log(session);
+
+    
+    if (session) {
+      localStorage.setItem("session", JSON.stringify(session));
+    }
+
+    console.log("Session:", session); 
   } catch (error) {
-    console.log(error);
+    console.error("Error in checkSession:", error);
   }
 }
 
-window.getSession= checkSession
 
-window.onload= getSession()
+window.onload = checkSession;

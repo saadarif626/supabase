@@ -71,7 +71,9 @@ async function getUsers() {
     console.log(error);
   }
 }
+var mysession= JSON.parse(localStorage.getItem("currentUser"))
 
+ 
 async function deleteUser(userId) {
   try {
     Swal.fire({
@@ -85,21 +87,15 @@ async function deleteUser(userId) {
           .delete()
           .eq("id", userId)
           .select();
-
         if (error) throw error;
-      
 
         if(data) {
           Swal.fire({
             icon: 'success' ,
             title: 'User Deleted Succesfully '
           })
-
           getUsers()
         }
-
-       
-
       }
     });
   } catch (error) {
